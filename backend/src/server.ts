@@ -50,6 +50,23 @@ app.get('/health', (_req, res) => {
   });
 });
 
+// Root Route
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'SonicFlow API Platform Engine',
+    version: '1.0.0',
+    adFree: true,
+    endpoints: {
+      health: '/health',
+      api: '/api/v1',
+      auth: '/auth',
+      catalog: '/api/v1/songs',
+      recommendations: '/api/v1/recommendations',
+    },
+  });
+});
+
 import authRoutes from './routes/authRoutes.js';
 import playlistRoutes from './routes/playlistRoutes.js';
 
@@ -63,24 +80,26 @@ app.use('/api/v1', apiRoutes);
 // Centralized error handling
 app.use(errorHandler);
 
-// Server startup
-const PORT = env.PORT || 4000;
-const server = app.listen(PORT, () => {
-  console.log(`🚀 SonicFlow API Server running at http://localhost:${PORT}`);
-  console.log(`🎵 Ad-Free Streaming Engine active on /api/v1`);
-});
-
-// Graceful shutdown
-const shutdown = async () => {
-  console.log('Shutting down server...');
-  server.close(async () => {
-    await prisma.$disconnect();
-    console.log('Database connections closed.');
-    process.exit(0);
+// Server startup (only bind port in standalone Node.js environment, not in serverless)
+if (!process.env.VERCEL) {
+  const PORT = env.PORT || 4000;
+  const server = app.listen(PORT, () => {
+    console.log(`🚀 SonicFlow API Server running at http://localhost:${PORT}`);
+    console.log(`🎵 Ad-Free Streaming Engine active on /api/v1`);
   });
-};
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+  // Graceful shutdown
+  const shutdown = async () => {
+    console.log('Shutting down server...');
+    server.close(async () => {
+      await prisma.$disconnect();
+      console.log('Database connections closed.');
+      process.exit(0);
+    });
+  };
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+}
 
 export default app;
