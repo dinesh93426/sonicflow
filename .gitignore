@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+
+# Production build outputs
+dist/
+build/
+
+# Environment files & secrets
+.env
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Uploads & generated media (preserve directory structure via .gitkeep)
+backend/uploads/audio/*
+backend/uploads/art/*
+!backend/uploads/audio/.gitkeep
+!backend/uploads/art/.gitkeep
+
+# Testing & coverage
+coverage/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

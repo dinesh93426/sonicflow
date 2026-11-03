@@ -1,0 +1,14 @@
+{
+  "name": "sonicflow-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SonicFlow - Complete, Production-Ready, Ad-Free Music Streaming Platform",
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:backend": "npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:backend": "npm --prefix backend run test"
+  }
+}
